@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { v4 as uuidV4 } from "uuid";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+import { useSnackbar } from "notistack";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [roomId, setRoomId] = useState("");
   const [username, setUsername] = useState("");
@@ -15,12 +16,16 @@ const Home = () => {
     e.preventDefault();
     const id = uuidV4();
     setRoomId(id);
-    toast.success("Created a new room");
+    enqueueSnackbar("Created a new room", {
+      variant: "success",
+    });
   };
 
   const joinRoom = () => {
     if (!roomId || !username) {
-      toast.error("ROOM ID & username is required");
+      enqueueSnackbar("ROOM ID & username is required", {
+        variant: "error",
+      });
       return;
     }
 

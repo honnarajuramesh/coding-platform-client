@@ -2,15 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { Toaster } from "react-hot-toast";
+import { SnackbarProvider } from "notistack";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      
+    <SnackbarProvider
+      maxSnack={4}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      autoHideDuration={3000}
+    >
+      <BrowserRouter>
         <App />
-    </BrowserRouter>
+      </BrowserRouter>
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

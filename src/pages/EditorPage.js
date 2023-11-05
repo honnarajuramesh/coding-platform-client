@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import toast from "react-hot-toast";
+import { useSnackbar } from "notistack";
 import {
   useLocation,
   useNavigate,
@@ -19,6 +19,9 @@ const EditorPage = () => {
   const location = useLocation();
   const { roomId } = useParams();
   const reactNavigator = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [username] = useState(location.state?.username);
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -29,25 +32,29 @@ const EditorPage = () => {
 
       function handleErrors(e) {
         console.log("socket error", e);
-        toast.error("Socket connection failed, try again later.");
+        enqueueSnackbar("Socket connection failed, try again later.!", {
+          variant: "error",
+        });
         reactNavigator("/");
         reactNavigator(0);
       }
 
       console.log("***** Room Id", roomId);
-      console.log("***** UserName", location.state?.username);
+      console.log("***** UserName", username);
 
       socketRef.current.emit(ACTIONS.JOIN, {
         roomId,
-        username: location.state?.username,
+        username: username,
       });
 
       // Listening for joined event
       socketRef.current.on(
         ACTIONS.JOINED,
-        ({ clients, username, socketId }) => {
-          if (username !== location.state?.username) {
-            toast.success(`${username} joined the room.`);
+        ({ clients, username: userName, socketId }) => {
+          if (userName !== username) {
+            enqueueSnackbar(`${username} joined the room.`, {
+              variant: "success",
+            });
             console.log(`${username} joined`);
           }
           setClients(clients);
@@ -60,7 +67,9 @@ const EditorPage = () => {
 
       // Listening for disconnected
       socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
-        toast.success(`${username} left the room.`);
+        enqueueSnackbar(`${username} left the room.`, {
+          variant: "success",
+        });
         console.log(`${username} left the room.`);
         setClients((prev) => {
           return prev.filter((client) => client.socketId !== socketId);
@@ -79,9 +88,13 @@ const EditorPage = () => {
     try {
       await navigator.clipboard.writeText(roomId);
       console.log("Room ID copied to clipboard");
-      toast.success("Room ID has been copied to your clipboard");
+      enqueueSnackbar("Room ID has been copied to your clipboard", {
+        variant: "success",
+      });
     } catch (err) {
-      toast.error("Could not copy the Room ID");
+      enqueueSnackbar("Could not copy the Room ID!", {
+        variant: "error",
+      });
       console.error(err);
     }
   }
@@ -125,6 +138,7 @@ const EditorPage = () => {
           onCodeChange={(code) => {
             codeRef.current = code;
           }}
+          username={username}
         />
       </div>
     </div>

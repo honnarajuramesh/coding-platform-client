@@ -1,8 +1,8 @@
 .home_container {
-  /* width: "100vw"; */
+  width: "100vw";
   height: 100%;
   background-color: #000;
-  /* border: "1px solid blue"; */
+  border: "1px solid blue";
   color: white;
 }
 
@@ -98,7 +98,12 @@ footer a:hover {
 }
 
 .mainWrap {
+  /* flex: 1; */
+  /* flex-direction: row; */
+  width: 100%;
+  height: 97vh;
   display: grid;
+  border: 1px solid green;
   grid-template-columns: 230px 1fr;
 }
 
@@ -130,15 +135,6 @@ footer a:hover {
   margin-top: 10px;
 }
 
-.logo {
-  border-bottom: 1px solid #424242;
-  padding-bottom: 10px;
-}
-
-.logoImage {
-  height: 60px;
-}
-
 .leaveBtn {
   width: 100%;
   margin-top: 20px;
@@ -148,4 +144,14 @@ footer a:hover {
   font-size: 20px;
   line-height: 1.6;
   padding-top: 20px;
+}
+.editorWrap {
+  min-height: 100dvh;
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+.editorStyle {
+  border: 1px solid yellow;
 }
