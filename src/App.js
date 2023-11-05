@@ -3,18 +3,23 @@ import Main from "./components/Main";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import EditorPage from "./pages/EditorPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const user = localStorage.getItem("token");
 
   return (
-    <Routes>
-      {user && <Route path="/" exact element={<Main />} />}
-      {user && <Route path="/editor/:id" exact element={<EditorPage />} />}
-      <Route path="/signup" exact element={<Signup />} />
-      <Route path="/login" exact element={<Login />} />
-      <Route path="/" element={<Navigate replace to="/login" />} />
-    </Routes>
+    // <Toaster>
+      <Routes>
+        {user && <Route path="/" exact element={<Main />} />}
+        {user && (
+          <Route path="/editor/:roomId" exact element={<EditorPage />} />
+        )}
+        <Route path="/signup" exact element={<Signup />} />
+        <Route path="/login" exact element={<Login />} />
+        <Route path="/" element={<Navigate replace to="/login" />} />
+      </Routes>
+    // </Toaster>
   );
 }
 
