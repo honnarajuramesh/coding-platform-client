@@ -39,9 +39,6 @@ const EditorPage = () => {
         reactNavigator(0);
       }
 
-      console.log("***** Room Id", roomId);
-      console.log("***** UserName", username);
-
       socketRef.current.emit(ACTIONS.JOIN, {
         roomId,
         username: username,
@@ -55,7 +52,6 @@ const EditorPage = () => {
             enqueueSnackbar(`${username} joined the room.`, {
               variant: "success",
             });
-            console.log(`${username} joined`);
           }
           setClients(clients);
           socketRef.current.emit(ACTIONS.SYNC_CODE, {
@@ -70,7 +66,6 @@ const EditorPage = () => {
         enqueueSnackbar(`${username} left the room.`, {
           variant: "success",
         });
-        console.log(`${username} left the room.`);
         setClients((prev) => {
           return prev.filter((client) => client.socketId !== socketId);
         });
@@ -84,10 +79,10 @@ const EditorPage = () => {
     };
   }, []);
 
+  //coping room id to clipboard
   async function copyRoomId() {
     try {
       await navigator.clipboard.writeText(roomId);
-      console.log("Room ID copied to clipboard");
       enqueueSnackbar("Room ID has been copied to your clipboard", {
         variant: "success",
       });

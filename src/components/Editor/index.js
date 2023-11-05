@@ -15,10 +15,7 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
   const editorRef = useRef(null);
   const [userCursors, setUserCursors] = useState([]);
 
-  useEffect(() => {
-    console.log(userCursors);
-  }, [userCursors]);
-
+  //update cursor location for state
   const handleCursorLocation = (username, coords) => {
     setUserCursors((prevUserCursors) => {
       const updatedUserCursors = [...prevUserCursors];
@@ -53,7 +50,6 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
 
     return () => {
       clearInterval(interval);
-      // window.removeEventListener("mousemove");
     };
   }, []);
 
@@ -106,10 +102,6 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
         ACTIONS.CURSOR_LOCATION_CHANGE,
         ({ username, coords }) => {
           handleCursorLocation(username, coords);
-          console.log("From Server_________________");
-          console.log(
-            `Name: ${username}......coors:${coords?.x}..${coords?.y}`
-          );
         }
       );
     }
