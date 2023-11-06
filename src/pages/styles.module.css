@@ -2,7 +2,7 @@
   width: "100vw";
   height: 100%;
   background-color: #000;
-  border: "1px solid blue";
+  /* border: "1px solid blue"; */
   color: white;
 }
 
@@ -103,7 +103,7 @@ footer a:hover {
   width: 100%;
   height: 97vh;
   display: grid;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   grid-template-columns: 230px 1fr;
 }
 
@@ -153,5 +153,5 @@ footer a:hover {
   padding: 0;
 }
 .editorStyle {
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
 }
