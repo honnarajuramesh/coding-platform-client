@@ -6,7 +6,6 @@ import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
 import { ACTIONS } from "../../constants/actions";
-import styles from "./styles.module.css";
 import CursorIcon from "../../assests/icons8-cursor.svg";
 
 import { useState } from "react";
@@ -63,8 +62,10 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
           autoCloseTags: true,
           autoCloseBrackets: true,
           lineNumbers: true,
+          lineWrapping: true,
         }
       );
+
       // Listening for code change
       editorRef.current.on("change", (instance, changes) => {
         const { origin } = changes;
@@ -126,7 +127,8 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
           }}
         />
       ))}
-      <textarea id="realtimeEditor" className={styles.CodeMirror}></textarea>
+
+      <textarea id="realtimeEditor"></textarea>
     </>
   );
 };

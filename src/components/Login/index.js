@@ -1,10 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useSnackbar } from "notistack";
 import styles from "./styles.module.css";
+import Spinner from "../Loading";
 
 const Login = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [data, setData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget: input }) => {
@@ -13,12 +17,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const url = process.env.REACT_APP_BACKEND_URL + "/auth";
+      const url = process.env.REACT_APP_BACKEND_URL + "/api/auth";
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data);
+      setLoading(false);
+      enqueueSnackbar("Login successfull.", {
+        variant: "success",
+      });
       window.location = "/";
     } catch (error) {
+      setLoading(false);
       if (
         error.response &&
         error.response.status >= 400 &&
@@ -54,7 +64,11 @@ const Login = () => {
               className={styles.input}
             />
             {error && <div className={styles.error_msg}>{error}</div>}
-            <button type="submit" className={styles.green_btn}>
+            <button
+              type="submit"
+              className={styles.green_btn}
+              disabled={loading}
+            >
               Sing In
             </button>
           </form>
@@ -68,6 +82,7 @@ const Login = () => {
           </Link>
         </div>
       </div>
+      {loading && <Spinner />}
     </div>
   );
 };
