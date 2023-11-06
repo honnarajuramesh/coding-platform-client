@@ -3,6 +3,7 @@
 ## Overview
 
 This project is a real-time collaborative code editor built with React.js, CodeMirror, and Socket.io. It allows multiple users to join a coding room, collaborate on code, and see each other's cursor movements in real time. The application supports JWT authentication for secure access, and it provides user interaction features, including notifications when users enter or leave a room.
+Hosted here, [https://coding-platform-client.vercel.app/](https://coding-platform-client.vercel.app/)
 
 ## Features
 
