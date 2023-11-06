@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Real-Time Collaborative Code Editor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is a real-time collaborative code editor built with React.js, CodeMirror, and Socket.io. It allows multiple users to join a coding room, collaborate on code, and see each other's cursor movements in real time. The application supports JWT authentication for secure access, and it provides user interaction features, including notifications when users enter or leave a room.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **User Authentication:** Users are required to sign up or log in using their credentials. Upon successful authentication, a JWT token is sent from the server and stored in the browser's `localStorage`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Collaborative Code Editing:** Users can create or join a coding room, where they can collaborate in real time. The CodeMirror code editor is integrated into the application to provide a seamless coding experience.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Real-Time User Interaction:** Users are notified when someone enters or leaves the room. This enhances the collaborative aspect of the platform and keeps users informed of who's actively coding.
 
-### `npm test`
+- **Cursor Tracking:** Users' cursor movements are tracked, and other users in the same room can see the positions of their peers' cursors. This feature is useful for tracking collaborators' positions within the code editor.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Room Management:** Users have the option to leave the room when they are done collaborating. They can also copy the room ID for easy sharing with others.
 
-### `npm run build`
+- **User Avatars:** The application displays user avatars of participants in the room, adding a visual element to identify users more easily.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository to your local machine:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   git clone https://github.com/honnarajuramesh/coding-platform-client.git
 
-### `npm run eject`
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install the project dependencies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   cd your-repo
+   npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Configure the backend server to handle user authentication and room management.
 
-## Learn More
+   - The server url is in .env file,
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Start the development server:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   npm start
 
-### Code Splitting
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. Open the app in your browser at [http://localhost:3000](http://localhost:3000)
