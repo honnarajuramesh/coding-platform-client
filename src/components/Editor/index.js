@@ -1,18 +1,28 @@
 import React, { useEffect, useRef } from "react";
 import Codemirror from "codemirror";
+import { useSnackbar } from "notistack";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/dracula.css";
-import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
-import { ACTIONS } from "../../constants/actions";
+
+import "codemirror/mode/php/php.js";
+import "codemirror/mode/javascript/javascript.js";
+import "codemirror/mode/python/python.js";
+import "codemirror/mode/swift/swift.js";
+import "codemirror/mode/vue/vue.js";
+
+import { ACTIONS, LANGUAGES } from "../../constants/actions";
 import CursorIcon from "../../assests/icons8-cursor.svg";
+import styles from "./styles.module.css";
 
 import { useState } from "react";
 
 const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
   const editorRef = useRef(null);
+  const { enqueueSnackbar } = useSnackbar();
   const [userCursors, setUserCursors] = useState([]);
+  const [language, setLanguage] = useState(LANGUAGES[4].value);
 
   //update cursor location for state
   const handleCursorLocation = (username, coords) => {
@@ -29,6 +39,14 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
       }
 
       return updatedUserCursors;
+    });
+  };
+
+  const handleCodingLangChange = (e) => {
+    setLanguage(e.target.value);
+    socketRef.current.emit(ACTIONS.LANG_CHANGE, {
+      roomId,
+      language: e?.target?.value,
     });
   };
 
@@ -57,7 +75,7 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
       editorRef.current = Codemirror.fromTextArea(
         document.getElementById("realtimeEditor"),
         {
-          mode: { name: "javascript", json: true },
+          mode: { name: "python", json: true },
           theme: "dracula",
           autoCloseTags: true,
           autoCloseBrackets: true,
@@ -96,6 +114,34 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
     };
   }, [socketRef.current]);
 
+  //Listning language selected
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.on(
+        ACTIONS.LANG_CHANGE,
+        ({ language: langFromServer }) => {
+          //Upating the lang if its not the current selected one. and warning about the lang chang.
+          if (language !== langFromServer) {
+            setLanguage(langFromServer);
+            enqueueSnackbar(
+              "The current Programming language has been changed by an user",
+              {
+                variant: "info",
+              }
+            );
+            enqueueSnackbar("Please check if code change is required!", {
+              variant: "info",
+            });
+          }
+        }
+      );
+    }
+
+    return () => {
+      socketRef.current.off(ACTIONS.LANG_CHANGE);
+    };
+  }, [socketRef.current]);
+
   //From Server Cursor location change
   useEffect(() => {
     if (socketRef.current) {
@@ -127,8 +173,23 @@ const Editor = ({ socketRef, roomId, onCodeChange, username }) => {
           }}
         />
       ))}
-
-      <textarea id="realtimeEditor"></textarea>
+      <div className={styles.main_container}>
+        <div className={styles.container}>
+          <h5 className={styles.text}>{"Programming language: "}</h5>
+          <select
+            value={language}
+            onChange={handleCodingLangChange}
+            className={styles.select}
+          >
+            {LANGUAGES.map((language) => (
+              <option key={language.value} value={language.value}>
+                {language.label.toUpperCase()}
+              </option>
+            ))}
+          </select>
+        </div>
+        <textarea id="realtimeEditor"></textarea>
+      </div>
     </>
   );
 };

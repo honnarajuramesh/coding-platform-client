@@ -9,6 +9,31 @@
   max-height: 500px;
 }
 
-.editorStyle {
-  /* border: 1px solid yellow; */
+.container {
+  display: flex;
+  background-color: #282a36;
+  border-bottom: 1px solid #b4b4b4;
+  align-items: center;
+  max-height: 3rem;
+  padding-left: 1rem;
+}
+
+.select {
+  height: 25px;
+  width: 8rem;
+  background-color: #282a36;
+  color: white;
+  border: 1px solid #b4b4b4;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.text {
+  color: white;
+  margin-right: 1rem;
+}
+
+.main_container {
+  display: flex;
+  flex-direction: column;
 }

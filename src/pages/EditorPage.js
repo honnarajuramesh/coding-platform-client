@@ -49,7 +49,7 @@ const EditorPage = () => {
         ACTIONS.JOINED,
         ({ clients, username: userName, socketId }) => {
           if (userName !== username) {
-            enqueueSnackbar(`${username} joined the room.`, {
+            enqueueSnackbar(`${userName} joined the room.`, {
               variant: "success",
             });
           }
